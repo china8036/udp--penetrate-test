@@ -18,9 +18,9 @@ func checkError(err error) {
 }
 
 func main() {
-	serverAddr,_ := net.ResolveUDPAddr("udp", "120.26.160.163:10006")
+	serverAddr, _ := net.ResolveUDPAddr("udp", "120.xx.xxx.xxx:10006")
 	srcAddr := &net.UDPAddr{IP: net.IPv4zero, Port: 10008} // 注意端口必须固定
-	udpCon, err := net.DialUDP("udp",  srcAddr,  serverAddr)
+	udpCon, err := net.DialUDP("udp", srcAddr, serverAddr)
 	checkError(err)
 	toWrite := "hello"
 	defer udpCon.Close()
@@ -37,10 +37,10 @@ func main() {
 
 	udpAddr := net.UDPAddr{ip, int(port), ""}
 	udpCon.Close()
-	udpCon, err = net.DialUDP("udp",  srcAddr,  &udpAddr)
+	udpCon, err = net.DialUDP("udp", srcAddr, &udpAddr)
 	checkError(err)
 	go func() {
-		for{
+		for {
 			msg := make([]byte, SERVER_RECV_LEN)
 			_, err = udpCon.Read(msg)
 			checkError(err)
@@ -50,7 +50,7 @@ func main() {
 
 	for {
 		fmt.Println("Send:", toWrite)
-		_, err3:= udpCon.Write([]byte(toWrite))
+		_, err3 := udpCon.Write([]byte(toWrite))
 		checkError(err3)
 		time.Sleep(1 * time.Second)
 	}
